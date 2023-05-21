@@ -97,7 +97,7 @@ textarea {
   <div class="jumbotron jumbotron-fluid float hidden" style="background: url('https://png.pngtree.com/thumb_back/fw800/background/20191011/pngtree-abstract-background-with-blue-squares-image_319148.jpg') center right no-repeat;">
     <div class="container">
       <h1 class="display-4">Bienvenue sur mon portfolio</h1>
-      <p class="lead">Je suis actuellement en formation pour devenir un développeur Full Stack spécialisé dans les applications web et mobiles, ainsi qu'un ingénieur en intelligence artificielle. Mon nom est Nelson FANOU/*-.</p>
+      <p class="lead">Je suis actuellement en formation pour devenir un développeur Full Stack spécialisé dans les applications web et mobiles, ainsi qu'un ingénieur en intelligence artificielle.</p>
     </div>
   </div>
 
@@ -273,48 +273,68 @@ textarea {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <script>
+   <script>
+  // Sélectionne tous les éléments avec la classe "card-text"
+  const cardTexts = document.querySelectorAll('.card-text');
 
-      // Sélectionne tous les éléments avec la classe "card-text"
-      const cardTexts = document.querySelectorAll('.card-text');
+  // Parcourt chaque élément de la liste cardTexts
+  cardTexts.forEach(cardText => {
+    // Récupère le texte de la description complète
+    const fullText = cardText.textContent.trim();
 
-      // Parcourt chaque élément de la liste cardTexts
-      cardTexts.forEach(cardText => {
-        // Récupère le texte de la description complète
-        const fullText = cardText.textContent.trim();
+    // Récupère les 200 premiers caractères de la description
+    const shortText = fullText.slice(0, 200).trim();
 
-        // Récupère les 200 premiers caractères de la description
-        const shortText = fullText.slice(0, 200).trim();
+    // Crée un élément "span" pour contenir le texte court
+    const shortTextSpan = document.createElement('span');
+    shortTextSpan.textContent = shortText;
 
-        // Crée un élément "span" pour contenir le texte court
-        const shortTextSpan = document.createElement('span');
-        shortTextSpan.textContent = shortText;
+    // Crée un élément "a" pour afficher le bouton "voir plus"
+    const readMoreLink = document.createElement('a');
+    readMoreLink.textContent = '... Voir plus';
+    readMoreLink.href = '#';
+    readMoreLink.style.display = 'none';
 
-        // Crée un élément "a" pour afficher le bouton "voir plus"
-        const readMoreLink = document.createElement('a');
-        readMoreLink.textContent = '... Voir plus';
-        readMoreLink.href = '#';
-        readMoreLink.style.display = 'none';
+    // Crée un élément "a" pour afficher le bouton "voir moins"
+    const readLessLink = document.createElement('a');
+    readLessLink.textContent = ' Voir moins';
+    readLessLink.href = '#';
+    readLessLink.style.display = 'none';
 
-        // Ajoute les éléments "span" et "a" à la card-text
-        cardText.textContent = '';
-        cardText.appendChild(shortTextSpan);
-        cardText.appendChild(readMoreLink);
+    // Ajoute les éléments "span", "a" et "a" à la card-text
+    cardText.textContent = '';
+    cardText.appendChild(shortTextSpan);
+    cardText.appendChild(readMoreLink);
+    cardText.appendChild(readLessLink);
 
-        // Ajoute un événement click au bouton "voir plus"
-        readMoreLink.addEventListener('click', (event) => {
-          event.preventDefault();
-          // Affiche la description complète
-          shortTextSpan.textContent = fullText;
-          // Cache le bouton "voir plus"
-          readMoreLink.style.display = 'none';
-        });
+    // Ajoute un événement click au bouton "voir plus"
+    readMoreLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      // Affiche la description complète
+      shortTextSpan.textContent = fullText;
+      // Cache le bouton "voir plus"
+      readMoreLink.style.display = 'none';
+      // Affiche le bouton "voir moins"
+      readLessLink.style.display = 'inline';
+    });
 
-        // Si la description complète est plus longue que 200 caractères, affiche le bouton "voir plus"
-        if (fullText.length > 200) {
-          readMoreLink.style.display = 'inline';
-        }
-      });
-    </script>
+    // Ajoute un événement click au bouton "voir moins"
+    readLessLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      // Affiche le texte court
+      shortTextSpan.textContent = shortText;
+      // Cache le bouton "voir moins"
+      readLessLink.style.display = 'none';
+      // Affiche le bouton "voir plus"
+      readMoreLink.style.display = 'inline';
+    });
+
+    // Si la description complète est plus longue que 200 caractères, affiche le bouton "voir plus"
+    if (fullText.length > 200) {
+      readMoreLink.style.display = 'inline';
+    }
+  });
+</script>
+
   </body>
 </html>
